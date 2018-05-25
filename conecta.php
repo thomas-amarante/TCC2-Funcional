@@ -1,7 +1,7 @@
 <?php
 
 include_once 'config.php';
-
+// funções prontas para consulta no banco de dados
 class conecta extends config{
  var $pdo;
  
