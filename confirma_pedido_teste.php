@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="now-ui-kit.css" type="text/css">
   <link rel="stylesheet" href="assets/css/nucleo-icons.css" type="text/css">
   <script src="assets/js/navbar-ontop.js"></script>
-  <script type="text/javascript"src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
+  
   <link rel="icon" href=""> <!-- adicionar ícone aqui -->
   
   <title>Marquejá</title>
@@ -45,13 +45,21 @@
   
   <script>
 	// funcão para automatizar e atribuir um valor a variável 'code', pegando esse valor via post do arquivo pagseguro.php
-	function enviaPagseguro(){
-		$.post('pagseguro.php','',function(data){
-			$('#code').val(data);
-			$('#comprar').submit();
+	 function enviaPagseguro(codigo){
+ 
+		$.post('salvarPedido.php','',function(idPedido){
+ 
+		$('#loading').css("visibility","visible");
+ 
+		$.post('pagseguro.php',{idPedido: idPedido},function(data){
+
+		$('#code').val(data);
+		$('#comprar').submit();
+
+		$('#loading').css("visibility","hidden");
+			})
 		})
-	}	
-	
+	}
 	var date = new Date();
 	date.setDate(date.getDate());
 	
@@ -164,12 +172,13 @@
       </div>
     </div>
   </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>﻿
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="assets/js/parallax.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
-  <script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
+  <script type="text/javascript"src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
+  
   
   
   </body>
