@@ -5,20 +5,18 @@
  
 
  
- $hora = $_POST['hora'];
-  
- $data = $_POST['data'];
+ $hora = $_POST['hora'];  
+ $data = $_POST['data']; 
+ $data_completa = $data." ".$hora;
  
-$data_completa = $data." ".$hora;
- 
- $id_user = $_SESSION['COD'];
- $nome_cliente = $_SESSION['NOME'];
- $pedido_quadra = $_POST['quadra'];
+  $id_user = $_SESSION['COD'];
+  $nome_cliente = $_SESSION['NOME'];
+  $pedido_quadra = $_POST['quadra'];
+  $valor = $_POST['valor'];
  
  
 $sql1	="SELECT * FROM tb_agenda WHERE data = '$data_completa' AND id_quadra = '$pedido_quadra'";
 $query1	= mysqli_query($conn, $sql1);
-
 
 							  
 if(mysqli_num_rows($query1)>0) 
@@ -32,7 +30,7 @@ if(mysqli_num_rows($query1)>0)
 								
 								
 							} else {
-									$sql = "INSERT INTO tb_agenda (id_quadra,data,id_user,nome_cliente) VALUES ('$pedido_quadra','$data_completa','$id_user','$nome_cliente')";
+									$sql = "INSERT INTO tb_agenda (id_quadra,data,id_user,nome_cliente,valor,status,descricao) VALUES ('$pedido_quadra','$data_completa','$id_user','$nome_cliente','$valor','11','Reserva')";
 									$query = mysqli_query ($conn, $sql);
 									
 									if(!query){

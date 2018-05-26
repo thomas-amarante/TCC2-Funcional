@@ -90,14 +90,14 @@
 	
 	 </div>
 	 <div class="container">
-		 <div class="ro	w">
-			 <div class="col">
-				<div class="card">
+		 <div class="row">
+			 <div class="col-md-12">
+				<div class="card mb-4">
 					<div class="card-header">
-						Confirma os dados da sua reserva:
+						<h1> Confirma os dados da sua reserva: </h3>
 					</div>
-					<div class="card-body">
-								<p class="text-center">Data selecionada: <?php echo $data ?></p>
+					<div class="card-body mt-2">
+								<h2><p class="text-center">Data selecionada: <?php echo $data ?></p><h2>
 						
 								<p class="text-center">Quadra selecionada: <?php echo $quadra ?></p>
 						
@@ -111,8 +111,12 @@
 					<button class="btn btn-success"  onclick="enviaPagseguro();">Efetuar pagamento online - PagSeguro</button>  <!-- botão com função ao clicar: executar a função enviaPagseguro -->
 					</div>
 					<div class="card-footer text-center">
-					<form action="gravar_pedido_bd.php">
+					<form action="gravar_pedido_bd.php" method="post">
 					<button type="submit" class="btn btn-info" >Desejo pagar no local</button>
+					<input type="hidden" name="data" id="data" value="<?php echo $data ?>" placeholder="<?php echo $data ?>" />
+					<input type="hidden" name="quadra" id="quadra" value="<?php echo $quadra ?>" placeholder="<?php echo $quadra ?>" />
+					<input type="hidden" name="valor" id="valor" value="<?php echo $valor ?>" placeholder="<?php echo $valor ?>" />
+					<input type="hidden" name="hora" id="hora" value="<?php echo $hora ?>" placeholder="<?php echo $hora ?>" />
 					</form>
 					</div>
 				<div>
