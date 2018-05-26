@@ -46,7 +46,7 @@
 	
  </div>
  <div class="container">
-	 <div class="row">
+	 <div class="ro	w">
 		 <div class="col">
 			<div class="card">
 				<div class="card-header">

@@ -3,6 +3,6 @@ class config{
  var $host = 'localhost';
  var $usuario = 'root';
  var $senha = '';
- var $db = 'teste2'; 
+ var $db = 'teste1'; 
 }
 ?>

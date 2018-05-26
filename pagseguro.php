@@ -1,6 +1,10 @@
 <?php
 
+session_name('sessionuser');
+session_start();
+
 $pedido = preg_replace('/[^[:alnum:]-]/','',$_POST["idPedido"]); // recebe por post o id do pedido salvo no banco de dados. Nesse momento o banco de dados já possui um pedido a esper de atualização de status
+$valor = $_SESSION["VALOR"];
 
 // dados para a compra do cliente
 $data['token'] = '8FDC81B6A9544EAB99B706D2411CE2E4'; // token de ambiente de teste - Sandbox
@@ -8,8 +12,8 @@ $data['email'] = 'thomasferreiraa@gmail.com'; // email usado para todos os ambie
 $data['currency'] = 'BRL';
 $data['itemId1'] = '1';
 $data['itemQuantity1'] = '1';
-$data['itemDescription1'] = 'Pedido de teste '.$pedido;
-$data['itemAmount1'] = '299.00';
+$data['itemDescription1'] = 'Reserva de local '.$pedido;
+$data['itemAmount1'] = $valor;
 $data['reference'] = $pedido; // referencia que liga o pedido salvo no banco de dados com o pedido do pagseguro - é o mais importenta atributo dessa página
 
 $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout'; // url para uso da lightbox em ambiente de teste - Sandbox

@@ -1,5 +1,5 @@
 <?php
- 
+	
  include_once 'conecta.php';
  $conn = new conecta();
  
