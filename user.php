@@ -1,7 +1,6 @@
 <?php
 	
-	
-	session_name('sessionuser');
+	//session_name('sessionuser');
 	session_start();
 	include('includes/connect.php');
 	

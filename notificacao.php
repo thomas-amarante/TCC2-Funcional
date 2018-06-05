@@ -1,4 +1,6 @@
+
 <?php
+header("access-control-allow-origin: https://sandbox.pagseguro.uol.com.br");
 
 $notificationCode = preg_replace('/[^[:alnum:]-]/','',$_POST["notificationCode"]); // recebe por xml a variável notificationCode e trata para evitar outros caracteres 
 
@@ -8,6 +10,7 @@ $data['email'] = 'thomasferreiraa@gmail.com'; // email para ambiente de teste ou
 $data = http_build_query($data); // recebe o array da variável $data e separa
 
 $url = 'https://ws.sandbox.pagseguro.uol.com.br/v3/transactions/notifications/'.$notificationCode.'?'.$data; // url de testes concatenando com as variáveis $notificationCode, $email e $token
+//$url = 'https://ws.pagseguro.uol.com.br/v3/transactions/notifications'.$notificationCode.'?'.$data; // url de produção concatenando com as variáveis $notificationCode, $email e $token
 
 //inicio do uso da biblioteca CURL
 $curl = curl_init();

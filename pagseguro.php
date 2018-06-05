@@ -15,6 +15,8 @@ $data['itemQuantity1'] = '1';
 $data['itemDescription1'] = 'Reserva de local '.$pedido;
 $data['itemAmount1'] = $valor;
 $data['reference'] = $pedido; // referencia que liga o pedido salvo no banco de dados com o pedido do pagseguro - é o mais importenta atributo dessa página
+$data['redirectURL']= 'https://acheiquadras.000webhostapp.com/pedido_finalizado.php';
+$data['notificationURL']= 'https://acheiquadras.000webhostapp.com/notificacao.php';
 
 $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout'; // url para uso da lightbox em ambiente de teste - Sandbox
 
@@ -32,6 +34,8 @@ $xml= curl_exec($curl);
 curl_close($curl);
 
 $xml= simplexml_load_string($xml);
+
+var_dump($xml);
 
 echo $xml -> code;
 

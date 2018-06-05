@@ -1,5 +1,8 @@
 <?php
+	
 	include('includes/connect.php');
+	include_once 'face.php';
+	
 ?>
 
 <!DOCTYPE html>
@@ -210,9 +213,11 @@
                   <h5 class="mb-4">
                     <b>Login do usuário</b>
                   </h5>
+				  <a href="<?php echo $loginUrl?>" >
                   <button class="btn btn-icon rounded btn-light mx-1 btn-facebook shadow" type="button">
                     <i class="fa fa-fw fa-lg fa-facebook-square"></i>
                   </button>
+				  </a>
                   <button class="btn btn-icon rounded btn-lg btn-light mx-1 btn-twitter shadow" type="button">
                     <i class="fa fa-fw fa-2x fa-twitter"></i>
                   </button>
@@ -242,7 +247,7 @@
                         </div>
                         <input type="password" class="form-control" id="inlineFormInputGroup" name="senha" placeholder="Senha..."> </div>
                     </div>
-                    <button type="submit" class="btn mt-4 mb-3 btn-light rounded btn-lg text-primary">Cadastrar</button>
+                    <button type="submit" class="btn mt-4 mb-3 btn-light rounded btn-lg text-primary">Entrar</button>
                   </form>
                 </div>
               </div>
