@@ -1,13 +1,23 @@
 <?php
+	date_default_timezone_set('America/Sao_Paulo');
+	$date = date('Y-m-d H:i');
 	
 	
-	session_name('sessionuser');
+	//session_name('sessionuser');
 	session_start();
 	include('includes/connect.php');
 	
-	$quadra = $_POST['quadra'];
+	$quadra_local = $_POST['quadra_local'];	
 	$data = $_POST ['data'];
 	
+	if($quadra_local == null) {
+				?>
+                	<script>
+                    	alert("Selecione o local para continuar...")
+						document.location.replace('user.php')
+                    </script>
+				<?php
+				}
 	if($data == null) {
 				?>
                 	<script>
@@ -35,6 +45,9 @@
   <link rel="stylesheet" href="assets/css/nucleo-icons.css" type="text/css">
   <script src="assets/js/navbar-ontop.js"></script>
 
+  <script src="js/jquery-3.2.1.slim.min.js"></script>
+  <script src="js/jquery-1.6.4.js"></script>
+  
   <title>Marquejá</title>
 
 <body class="">
@@ -88,7 +101,7 @@
       <div class="row">
         <div class="col-md-12">
 			Data selecionada: <?php echo $data ?>
-			Quadra selecionada: <?php echo $quadra ?>
+			Quadra selecionada: <?php echo $quadra_local ?>
 		</div>
 	  </div>
 	</div>
@@ -97,10 +110,15 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
+		  <?php echo $date ?>
 			<form action="confirma_pedido.php" method="post">
 			<?php	
-																		
-			$sql3= "SELECT DATE_FORMAT(data, '%H:%i:%s') as hora from tb_agenda WHERE DATE_FORMAT(data,'%Y-%m-%d')='$data' AND id_quadra='$quadra'";
+			$sql4 = "SELECT id_quadra FROM tb_quadras_locais WHERE id = '$quadra_local'";
+			$query4	= mysqli_query($conn, $sql4);
+			$dados4 = mysqli_fetch_array($query4);
+			$quadra = $dados4['id_quadra'];
+			$sql3= "SELECT DATE_FORMAT(data, '%H:%i:%s') as hora from tb_agenda WHERE DATE_FORMAT(data,'%Y-%m-%d')='$data' AND id_quadra='$quadra' AND id_quadra_local='$quadra_local'";
+			
 			$query3	= mysqli_query($conn, $sql3);
 			
 			
@@ -143,6 +161,7 @@
 				</div>
 				
 				<input type="hidden" name="data" value="<?php echo $data?>" placeholder="<?php echo $data?>" ></button>
+				<input type="hidden" name="quadra_local" value="<?php echo $quadra_local?>" placeholder=" <?php echo $quadra_local?>"></button>
 				<input type="hidden" name="quadra" value="<?php echo $quadra?>" placeholder=" <?php echo $quadra?>"></button>
 				
 			</form>

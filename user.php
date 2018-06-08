@@ -20,7 +20,9 @@
   <link rel="stylesheet" href="now-ui-kit.css" type="text/css">
   <link rel="stylesheet" href="assets/css/nucleo-icons.css" type="text/css">
   <script src="assets/js/navbar-ontop.js"></script>
-
+  
+  
+  
   <title>Marquejá</title>
 
 <body class="">
@@ -71,9 +73,9 @@
       </div>
     </div>
   </nav>
-  <div class="py-5 bg-secondary">
+  <div class="py-5 bg-primary">
   </div>
-  <div class="py-5 bg-secondary">
+  <div class="py-5 bg-white">
     <div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -81,7 +83,27 @@
 					<b>Seja bem-vindo <?=$_SESSION['NOME'] ?> </b>
 				</h3>
 			</div>
-		</div>	  
+		</div>
+
+		<div class="py-5" id="mapa">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="mb-4">Localize as quadras mais próximas de você!</h4>
+					</div>
+				</div>
+				<div class="row my-5">
+					<div class=" col-6"> 					
+							<button class="btn btn-success" onClick=window.location="gps.html";> Sim, abrir um mapa! </button>			
+					</div>
+					<div class=" col-6"> 					
+							<button class="btn btn-info" href="#agendamento" > Não, já conheço os locais </button>			
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
 		<div class="row" id="proxjogos">
 			<div class="col-md-12">
 				<h3 class="">
@@ -93,13 +115,15 @@
 			$nenhum_jogo = "Você não possui jogos agendados";
 			
 			$sql = "SELECT * FROM `tb_agenda` WHERE id_user = 14 ORDER BY `tb_agenda`.`data` DESC";
-			$sql1="SELECT * FROM tb_agenda a INNER JOIN tb_quadras b ON a.id_quadra = b.id WHERE id_user = '$user'" ;			
+			$sql1="SELECT * FROM tb_agenda a INNER JOIN tb_quadras b ON a.id_quadra = b.id WHERE id_user = '$user' ORDER BY `a`.`data` DESC" ;			
 			$sql2= "SELECT * FROM `tb_agenda` WHERE `data`> NOW() AND id_user = '$user' ORDER BY `tb_agenda`.`data` DESC";
+			$sql3="SELECT * FROM tb_agenda a INNER JOIN tb_quadras_locais b ON a.id_quadra_local = b.id WHERE id_user = '$user' ORDER BY `a`.`data` DESC" ;	
 			// $sql3 = "SELECT * FROM tb_agenda a INNER JOIN tb_usuario b ON a.id_user = b.id WHERE id_user = '$user'"; -- > exibir nome do cliente que marcou
 			
 			$query = mysqli_query($conn,$sql);
 			$query1 = mysqli_query($conn,$sql1);
 			$query2 = mysqli_query($conn,$sql2);
+			$query3 = mysqli_query($conn,$sql3);
 			
 			
 			
@@ -115,7 +139,8 @@
 					  <th scope="col">#</th>
 					  <th scope="col">Data</th>
 					  <th scope="col">Hora</th>
-					  <th scope="col">Local</th>					  
+					  <th scope="col">Local</th>
+					  <th scope="col">Quadra</th>					  
 					  <th scope="col">Ações</th>
 					  <th scope="col">Whats</th>
 					</tr>
@@ -129,7 +154,7 @@
 							</tbody>						
 						<?php } else {
 									while($dados2 = mysqli_fetch_array($query2)){
-										$dados1 = mysqli_fetch_array($query1)?>
+										$dados1 = mysqli_fetch_array($query1); $dados3 = mysqli_fetch_array($query3); $dados = mysqli_fetch_array($query) ?>
 				  <tbody>
 					<tr>
 					  <th scope="row"></th>
@@ -146,10 +171,11 @@
 							$dataformat = explode(" ",$formatar_hora);
 							$formatar_hora = $dataformat[1]; ?>					  
 					  <td><?php echo $formatar_hora ?></td>
-					  <td><?php echo $dados1['nome'] ?></td> 					  
+					  <td><?php echo $dados1['nome'] ?></td>
+					  <td><?php echo $dados3['nome_quadra_local'] ?></td>  					  
 					  <td> <button class="btn btn-danger" href="excluir_agendamento.php?key=<?=$dados2['id']?>" onClick="if(confirm('Deseja mesmo cancelar?')){document.location.href='excluir_agendamento.php?key=<?=$dados2['id']?>'}">Cancelar </button></td>
 					  
-					  <td> <button class="btn btn-success" onClick=window.location="whatsapp.php";> Whatsapp </button></td>
+					  <td> <button class="btn btn-success" onClick=window.location="whatsapp.php?key=<?=$dados['id']?>";> Whatsapp </button></td>
 					</tr>    
 				  </tbody>
 				  <?php } }?>
@@ -165,21 +191,25 @@
 		<form action="horarios.php" method="post">
 			<div class="col">				
 				<h4 class="mb-3">Data de agendamento</h4>
-				<input type="text" class="form-control" name="data" id="datepicker" placeholder="Selecione a data desejada...">
+				<input type="text" readonly="readonly" class="form-control" name="data" id="datepicker" placeholder="Selecione a data desejada...">
 			</div>
 			<div class="col">				
 				<h4 class="mb-3">Local do agendamento</h4>
 				
-				<select id="quadra" name="quadra" class="form-control">
-                                <?php 
-									$sql = "SELECT id,nome FROM tb_quadras";
-									$query = mysqli_query($conn, $sql);
-									while($dados = mysqli_fetch_array($query)) { ?>                                
-                                     
-                                     <option value="<?php echo $dados['id'] ?>" ><?php echo $dados['nome'] ?></option>     
-                                      
-                                <?php } ?>                       
-                             </select>
+				<select id="quadra_local" name="quadra_local" class="form-control">
+					<?php 
+						$sql = "SELECT * FROM tb_quadras_locais";
+						$sql1="SELECT * FROM tb_quadras_locais a INNER JOIN tb_quadras b ON a.id_quadra = b.id" ;									
+						$query = mysqli_query($conn, $sql);
+						$query1 = mysqli_query($conn, $sql1);						
+							
+								while($dados = mysqli_fetch_array($query)) {                               
+									$dados1 = mysqli_fetch_array($query1)?>  
+									<option value="<?php echo $dados['id'] ?>" ><?php echo $dados1['nome']?> - <?php echo $dados1['nome_quadra_local']?></option>     
+						  
+							<?php } ?>                       
+				</select>
+							 
 				
 				<button type="submit" value="pesquisar" class="btn btn-primary">
 				  Veja os horários disponíveis para essa data
@@ -196,9 +226,11 @@
 		<?php
 			$sql = "SELECT * FROM tb_agenda WHERE `data` < now() AND id_user ='$user' ORDER by `data` DESC";
 			$sql1="SELECT * FROM tb_agenda a INNER JOIN tb_quadras b ON a.id_quadra = b.id WHERE id_user = '$user'" ;
+			$sql2="SELECT nome_quadra_local FROM tb_agenda a INNER JOIN tb_quadras_locais b ON a.id_quadra_local = b.id WHERE id_user = '$user' ORDER BY `a`.`data` DESC" ;	
 
 			$query = mysqli_query($conn,$sql);
 			$query1 = mysqli_query($conn,$sql1);			
+			$query2 = mysqli_query($conn,$sql2);			
 			
 			 ?>
 				<table class="table table-striped">
@@ -208,6 +240,7 @@
 					  <th scope="col">Data</th>
 					  <th scope="col">Hora</th>
 					  <th scope="col">Local</th>
+					  <th scope="col">Quadra</th>
 					</tr>
 				  </thead>
 				  <?php if(mysqli_num_rows($query)<1){ ?>
@@ -219,7 +252,8 @@
 			<?php } else {
 							
 						while($dados = mysqli_fetch_array($query)){
-								$dados1 = mysqli_fetch_array($query1)
+								$dados1 = mysqli_fetch_array($query1); 
+								$dados2 = mysqli_fetch_array($query2); 
 			?>				
 				  <tbody>
 					<tr>
@@ -237,40 +271,26 @@
 							$formatar_hora1 = $dataformat[1]; ?>	
 					  <td><?php echo $formatar_hora1 ?></td>
 					  <td><?php echo $dados1['nome'] ?></td>
+					  <td><?php echo $dados2['nome_quadra_local'] ?></td>
 					</tr>    
 				  </tbody>
 				  <?php } }?>
 				</table> 
 				</div>
 			
-			
+		</div> 	
 			
 		
   
-	<div class="py-5" id="mapa">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h4 class="mb-4">Veja as quadras mais próximas de você:</h4>
-        </div>
-      </div>
-      <div class="row my-5">
-        <div class="mx-auto col-8">          
-            <iframe src="gps.html" width="800" height="600" frameborder="0" style="border:0" ></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-  </div>
-     
+	   
       
   
-   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="js/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="assets/js/parallax.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+  
   <script>
     
 	var date = new Date();

@@ -1,23 +1,27 @@
 <?php
 
-session_name('sessionuser');
+//session_name('sessionuser');
 session_start();
 include ('/includes/connect.php');
 
-
+$id_agenda = $_GET['key'];
 $user = $_SESSION['COD'];
 
 
 
-$sql = "SELECT * FROM tb_usuario WHERE id = '$user'"; 
-$sql1= "SELECT * FROM tb_agenda a INNER JOIN tb_quadras b ON a.id_quadra = b.id WHERE id_user = '$user'" ;
+$sql = "SELECT * FROM tb_usuario WHERE id = '$user'";
+$sql1= "SELECT * FROM tb_agenda a INNER JOIN tb_quadras b ON a.id_quadra = b.id WHERE a.id= '$id_agenda'" ;
+$sql2= "SELECT * FROM tb_agenda a INNER JOIN tb_quadras_locais b ON a.id_quadra_local = b.id WHERE a.id = '$id_agenda'" ;
 
 
-$query = mysqli_query($conn, $sql);
+$query = mysqli_query($conn, $sql);	
 $query1 = mysqli_query($conn, $sql1);
+$query2 = mysqli_query($conn, $sql2);
+
 
 $dados = mysqli_fetch_array($query);
 $dados1 = mysqli_fetch_array($query1);
+$dados2 = mysqli_fetch_array($query2);
 
 
 $formatar_hora = $dados1['data'];
@@ -32,7 +36,7 @@ $hora = $dataformat[1];
 
 
 
-<html lang="en-US"><head>
+<html lang="PT-BR"><head>
 <head>
     <title>WathsApp Send</title>
     <meta charset="utf-8">
@@ -71,7 +75,7 @@ $hora = $dataformat[1];
                     <div class="input-group-prepend">
                         <span class="input-group-text rounded-0 fa fa-pencil-square-o"></span>
                     </div>
-                    <input id="message" type="text" value="Olá <?php echo $dados['nome']?>, você tem marcado um jogo hoje na quadra <?php echo $dados1['nome'] ?> as <?php echo $hora ?> " class="form-control rounded-0">
+                    <input id="message" type="text" value="Olá <?php echo $dados['nome']?>, você tem marcado um jogo hoje! Local: <?php echo $dados1['nome'] ?>, <?php echo $dados2['nome_quadra_local'] ?> às <?php echo $hora ?> " class="form-control rounded-0">
                 </div>
             
             </div>

@@ -1,5 +1,5 @@
 <?php
-	session_name('sessionuser');
+	//session_name('sessionuser');
 	session_start();
 	include('/includes/connect.php');
  
@@ -12,10 +12,11 @@
   $id_user = $_SESSION['COD'];
   $nome_cliente = $_SESSION['NOME'];
   $pedido_quadra = $_POST['quadra'];
+ echo  $quadra_local = $_POST['quadra_local'];
   $valor = $_POST['valor'];
  
  
-$sql1	="SELECT * FROM tb_agenda WHERE data = '$data_completa' AND id_quadra = '$pedido_quadra'";
+echo $sql1	="SELECT * FROM tb_agenda WHERE data = '$data_completa' AND id_quadra = '$pedido_quadra' AND id_quadra_local = '$quadra_local'";
 $query1	= mysqli_query($conn, $sql1);
 
 							  
@@ -30,10 +31,10 @@ if(mysqli_num_rows($query1)>0)
 								
 								
 							} else {
-									$sql = "INSERT INTO tb_agenda (id_quadra,data,id_user,nome_cliente,valor,status,descricao) VALUES ('$pedido_quadra','$data_completa','$id_user','$nome_cliente','$valor','11','Reserva')";
+									$sql = "INSERT INTO tb_agenda (id_quadra_local,id_quadra,data,id_user,nome_cliente,valor,status,descricao) VALUES ('$quadra_local','$pedido_quadra','$data_completa','$id_user','$nome_cliente','$valor','11','Reserva')";
 									$query = mysqli_query ($conn, $sql);
 									
-									if(!query){
+									if(!$query){
 										?>
 											<script>
 												alert('Erro ao realizar o agendamento :(');

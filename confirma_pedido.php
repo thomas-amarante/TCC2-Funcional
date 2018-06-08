@@ -1,10 +1,11 @@
 <?php
 	
-	session_name('sessionuser');
+	//session_name('sessionuser');
 	session_start();
 	include('includes/connect.php');
 	
 	$quadra = $_POST['quadra'];
+	$quadra_local = $_POST['quadra_local'];
 	$data 	= $_POST ['data'];
 	$hora 	= $_POST ['hora'];
 	
@@ -66,6 +67,7 @@
 					$_SESSION['DATA'] 				= $data;
 					$_SESSION['VALOR'] 				= $valor . $aux;
 					$_SESSION['HORA'] 				= $hora;
+					$_SESSION['QUADRA_LOCAL'] 		= $quadra_local;
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -99,7 +101,9 @@
 					<div class="card-body mt-2">
 								<h2><p class="text-center">Data selecionada: <?php echo $data ?></p><h2>
 						
-								<p class="text-center">Quadra selecionada: <?php echo $quadra ?></p>
+								<p class="text-center">Local selecionada: <?php echo $quadra ?></p>
+								
+								<p class="text-center">Quadra selecionada: <?php echo $quadra_local ?></p>
 						
 								<p class="text-center">Horário do jogo: <?php echo $hora ?></p>
 						
@@ -115,6 +119,7 @@
 					<button type="submit" class="btn btn-info" >Desejo pagar no local</button>
 					<input type="hidden" name="data" id="data" value="<?php echo $data ?>" placeholder="<?php echo $data ?>" />
 					<input type="hidden" name="quadra" id="quadra" value="<?php echo $quadra ?>" placeholder="<?php echo $quadra ?>" />
+					<input type="hidden" name="quadra_local" id="quadra_local" value="<?php echo $quadra_local ?>" placeholder="<?php echo $quadra_local ?>" />
 					<input type="hidden" name="valor" id="valor" value="<?php echo $valor ?>" placeholder="<?php echo $valor ?>" />
 					<input type="hidden" name="hora" id="hora" value="<?php echo $hora ?>" placeholder="<?php echo $hora ?>" />
 					</form>

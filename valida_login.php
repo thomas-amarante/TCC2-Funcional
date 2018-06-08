@@ -1,7 +1,7 @@
 <?php
 	
 	include('js/functions.php');
-	session_name('sessionuser');
+	//session_name('sessionuser');
 	session_start();
 	include('includes/connect.php');
 
@@ -56,7 +56,7 @@
 				         alert("Usuário não encontrado");
 						<?php $_SESSION = array();
 				         session_destroy(); ?>
-						 document.location.replace('index.php');                            
+						 document.location.replace('index.html');                            
                 </script>
 				<?php
 				   

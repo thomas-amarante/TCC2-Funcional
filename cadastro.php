@@ -1,7 +1,7 @@
 <?php
-	session_name('sessionuser');
+	//session_name('sessionuser');
 	session_start();
-	include('/includes/connect.php');
+	include_once 'includes/connect.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,20 +26,37 @@
         </div>
         <div class="modal-body row">
           <h6 class="text-center">Preencha todos os campos para prosseguir...</h6>
+		  
           <form action="gravar_user_bd.php" method="post" class="col-md-10 col-md-offset-1 col-xs-12 col-xs-offset-0">
             <div class="form-group">
-              <input type="text" class="form-control input-lg" placeholder="<?php echo $_SESSION['NOME_FACE'] ?>" name="nome_face">
+              <input type="text" class="form-control input-lg" value="<?php echo $_SESSION['NOME_F'] ?>" name="nome_f">
             </div>
             <div class="form-group">
-              <input type="password" class="form-control input-lg" placeholder="<?php echo $_SESSION['EMAIL_FACE'] ?>" name="email_face">
+              <input type="text" class="form-control input-lg" value="<?php echo $_SESSION['EMAIL_F'] ?>" name="email_f">
             </div>
-            <div class="form-group">
-              <input type="submit" value="login" class="btn btn-info btn-lg btn-block" >
+			<div class="form-group">
+              <input type="text" class="form-control input-lg" placeholder="CEP" name="cep">
+            </div>
+			<div class="form-group">
+              <input type="text" class="form-control input-lg" placeholder="Fone celular (DDD+seu número)" name="cel">
+            </div>
+			<div class="form-group">
+              <input type="text" class="form-control input-lg" placeholder="Endereço" name="end">
+            </div>
+			<div class="form-group">
+              <input type="text" class="form-control input-lg" placeholder="Número da casa/ap" name="num">
+            </div>			
+			<div class="form-group">
+              <input type="submit" value="Cadastrar usuário" class="btn btn-info btn-lg btn-block" >
             </div>
           </form>
         </div>
         <div class="modal-footer"> 
-         
+			<div class="form-group">
+				<a href='index.html'>
+              <input type="button" value="Cancelar" class="btn btn-danger btn-lg btn-block" >
+				</a>
+            </div>
         </div>
       </div>
     </div>
