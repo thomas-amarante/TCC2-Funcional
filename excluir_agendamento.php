@@ -1,7 +1,8 @@
 <?php
 	include('includes/connect.php');
-		
-	$sql	= "DELETE FROM tb_agenda WHERE id ='{$_GET['key']}'";
+	
+	$id = $_POST['id'];	
+	$sql	= "DELETE FROM tb_agenda WHERE id ='$id'";
 	$query	= mysqli_query($conn, $sql);
 	
 	if(!$query)
@@ -19,7 +20,7 @@
 			?>
             	<script>
 					alert('Agendamento cancelado.');
-					document.location.replace('user.php');
+					window.history.back();
                 </script>
 			<?php
 		

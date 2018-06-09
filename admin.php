@@ -290,13 +290,18 @@
 								<dt>Inicio do Evento</dt>
 								<dd id="start"></dd>								
 							</dl>
-							<button class="btn btn-canc-vis btn-warning">Editar</button> </br>
+							<button class="btn btn-canc-vis btn-warning">Editar</button> 
 							<?php 
-								$sql = "SELECT * FROM tb_agenda a INNER JOIN tb_usuario b ON a.id_user = b.id WHERE id_quadra = '$user'";
-								$query = mysqli_query($conn, $sql);
-								$dados = mysqli_fetch_array($query);							
+								$sql = "SELECT * FROM tb_agenda a INNER JOIN tb_usuario b ON a.id_user = b.id WHERE id_quadra = '$user'";								
+								$query = mysqli_query($conn, $sql);								
+								$dados = mysqli_fetch_array($query);
+								
 							?>
 							<button class="btn btn-success" onClick=window.location='whatsapp.php?key=<?php echo $row_events2['id']?>&key1=<?php echo $dados['id_user']?>'> Whatsapp </button>
+							<form class="form-horizontal" method="POST" action="excluir_agendamento.php">
+								<button type="submit" class="btn btn-danger" onClick="if(confirm('Deseja mesmo cancelar?')){document.location.href='excluir_agendamento.php'}">Cancelar </button>
+								<input type="hidden" class="form-control" name="id" id="id">
+							</form>
 						</div>
 						<div class="form">
 							<form class="form-horizontal" method="POST" action="proc_edit_evento.php">
