@@ -5,7 +5,7 @@ session_start();
 include ('/includes/connect.php');
 
 $id_agenda = $_GET['key'];
-$user = $_SESSION['COD'];
+$user = $_GET['key1'];
 
 
 
@@ -14,7 +14,7 @@ $sql1= "SELECT * FROM tb_agenda a INNER JOIN tb_quadras b ON a.id_quadra = b.id 
 $sql2= "SELECT * FROM tb_agenda a INNER JOIN tb_quadras_locais b ON a.id_quadra_local = b.id WHERE a.id = '$id_agenda'" ;
 
 
-$query = mysqli_query($conn, $sql);	
+$query 	= mysqli_query($conn, $sql);	
 $query1 = mysqli_query($conn, $sql1);
 $query2 = mysqli_query($conn, $sql2);
 

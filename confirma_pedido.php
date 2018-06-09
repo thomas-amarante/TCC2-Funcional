@@ -6,11 +6,20 @@
 	
 	$quadra = $_POST['quadra'];
 	$quadra_local = $_POST['quadra_local'];
-	$data 	= $_POST ['data'];
-	$hora 	= $_POST ['hora'];
+	echo $data 	= $_POST ['data'];
+	echo $hora 	= $_POST ['hora'];
+	echo $dia 	= $_POST ['dia'];
 	
 	
-	$sql = "SELECT * FROM tb_quadras WHERE id = '$quadra'";
+	$dataformat = explode(":",$hora);
+	echo $formatar_hora = $dataformat[0].'_00 ';
+	
+	echo $sql = "SELECT $formatar_hora as valor FROM tb_horarios WHERE id_quadras_h = '$quadra' AND id_quadras_locais_h = '$quadra_local' AND dias = '$dia'";
+	$query = mysqli_query($conn, $sql);
+	$dados = mysqli_fetch_array($query);
+	
+																/** trecho de código funcionando
+	 $sql = "SELECT * FROM tb_quadras WHERE id = '$quadra'";
 	$query = mysqli_query($conn, $sql);
 	$dados = mysqli_fetch_array($query);
 	
@@ -60,12 +69,14 @@
 	case "23:00:00":
         $valor = $dados['valor_noite'];
         break;
-}
+}       
+														trecho de código funcionando  **/ 
 	  
 					$aux = '.00';
 					$_SESSION['QUADRA'] 			= $quadra;
 					$_SESSION['DATA'] 				= $data;
-					$_SESSION['VALOR'] 				= $valor . $aux;
+					$_SESSION['VALOR'] 				= $dados['valor'];
+					$valor							= $dados['valor'];
 					$_SESSION['HORA'] 				= $hora;
 					$_SESSION['QUADRA_LOCAL'] 		= $quadra_local;
 ?>

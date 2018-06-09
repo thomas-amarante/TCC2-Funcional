@@ -7,7 +7,7 @@
 	
 	$user = $_SESSION['COD_E'];
 	//$nome = $_SESSION['NOME_E'];
-	$result_events = "SELECT * FROM tb_agenda a INNER JOIN tb_usuario b ON a.id_user = b.id WHERE id_quadra = '$user'";
+	 $result_events = "SELECT * FROM tb_agenda a INNER JOIN tb_usuario b ON a.id_user = b.id WHERE id_quadra = '$user'";
 	$result_events2 = "SELECT id FROM tb_agenda WHERE id_quadra = '$user'";		
 	$resultado_events = mysqli_query($conn, $result_events);
 	$resultado_events2 = mysqli_query($conn, $result_events2);
@@ -290,7 +290,13 @@
 								<dt>Inicio do Evento</dt>
 								<dd id="start"></dd>								
 							</dl>
-							<button class="btn btn-canc-vis btn-warning">Editar</button>
+							<button class="btn btn-canc-vis btn-warning">Editar</button> </br>
+							<?php 
+								$sql = "SELECT * FROM tb_agenda a INNER JOIN tb_usuario b ON a.id_user = b.id WHERE id_quadra = '$user'";
+								$query = mysqli_query($conn, $sql);
+								$dados = mysqli_fetch_array($query);							
+							?>
+							<button class="btn btn-success" onClick=window.location='whatsapp.php?key=<?php echo $row_events2['id']?>&key1=<?php echo $dados['id_user']?>'> Whatsapp </button>
 						</div>
 						<div class="form">
 							<form class="form-horizontal" method="POST" action="proc_edit_evento.php">

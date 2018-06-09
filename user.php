@@ -5,7 +5,6 @@
 	include('includes/connect.php');
 	
 	$user = $_SESSION['COD'];
-
 ?>
 
 <!DOCTYPE html>
@@ -140,7 +139,8 @@
 					  <th scope="col">Data</th>
 					  <th scope="col">Hora</th>
 					  <th scope="col">Local</th>
-					  <th scope="col">Quadra</th>					  
+					  <th scope="col">Quadra</th>
+					  <th scope="col">Valor</th>						  
 					  <th scope="col">Ações</th>
 					  <th scope="col">Whats</th>
 					</tr>
@@ -172,7 +172,8 @@
 							$formatar_hora = $dataformat[1]; ?>					  
 					  <td><?php echo $formatar_hora ?></td>
 					  <td><?php echo $dados1['nome'] ?></td>
-					  <td><?php echo $dados3['nome_quadra_local'] ?></td>  					  
+					  <td><?php echo $dados3['nome_quadra_local'] ?></td>
+					  <td><?php echo 'R$'.$dados2['valor'].',00' ?></td>  	  					  
 					  <td> <button class="btn btn-danger" href="excluir_agendamento.php?key=<?=$dados2['id']?>" onClick="if(confirm('Deseja mesmo cancelar?')){document.location.href='excluir_agendamento.php?key=<?=$dados2['id']?>'}">Cancelar </button></td>
 					  
 					  <td> <button class="btn btn-success" onClick=window.location="whatsapp.php?key=<?=$dados['id']?>";> Whatsapp </button></td>
@@ -189,10 +190,12 @@
       <div class="row my-4" id="agendamento">
 	  <div class="col">
 		<form action="horarios.php" method="post">
-			<div class="col">				
+			<div class="col">
+				<p class="name"></p>
 				<h4 class="mb-3">Data de agendamento</h4>
 				<input type="text" readonly="readonly" class="form-control" name="data" id="datepicker" placeholder="Selecione a data desejada...">
 			</div>
+			
 			<div class="col">				
 				<h4 class="mb-3">Local do agendamento</h4>
 				
@@ -239,8 +242,9 @@
 					  <th scope="col">#</th>
 					  <th scope="col">Data</th>
 					  <th scope="col">Hora</th>
-					  <th scope="col">Local</th>
+					  <th scope="col">Local</th>					  
 					  <th scope="col">Quadra</th>
+					  <th scope="col">Valor</th>
 					</tr>
 				  </thead>
 				  <?php if(mysqli_num_rows($query)<1){ ?>
@@ -272,6 +276,7 @@
 					  <td><?php echo $formatar_hora1 ?></td>
 					  <td><?php echo $dados1['nome'] ?></td>
 					  <td><?php echo $dados2['nome_quadra_local'] ?></td>
+					  <td><?php echo 'R$'.$dados['valor'].',00' ?></td>
 					</tr>    
 				  </tbody>
 				  <?php } }?>
@@ -284,7 +289,7 @@
   
 	   
       
-  
+  <script src="includes/datepicker-pt-BR.js"></script>
   <script src="js/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -300,12 +305,14 @@
             $('[data-toggle="popover"]').popover();   
             $('[data-toggle="tooltip"]').tooltip();
             $('#datepicker').datepicker({
+				
 				calendarWeeks: true,
                 autoclose: true,
                 todayHighlight: true,
 				startDate: date,
-				format: "dd/mm/yyyy"				
-            });
+				format: "dd/mm/yyyy",				
+					
+				            });
           });
   </script>
   

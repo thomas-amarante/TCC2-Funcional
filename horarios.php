@@ -1,14 +1,26 @@
 <?php
 	date_default_timezone_set('America/Sao_Paulo');
-	$date = date('Y-m-d H:i');
-	
-	
 	//session_name('sessionuser');
 	session_start();
 	include('includes/connect.php');
 	
 	$quadra_local = $_POST['quadra_local'];	
 	$data = $_POST ['data'];
+	$Formatdata = explode("/",$data);
+	echo $data = $Formatdata[2].'-'.$Formatdata[1].'-'.$Formatdata[0];
+	
+	//Array com os dias da semana
+	$diasemana = array('Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado');
+
+	// Aqui podemos usar a data atual ou qualquer outra data no formato Ano-mês-dia (2014-02-28)
+	$data1 = $data;
+
+	// Varivel que recebe o dia da semana (0 = Domingo, 1 = Segunda ...)
+	$diasemana_numero = date('w', strtotime($data1));
+
+	// Exibe o dia da semana com o Array
+	$diasemana[$diasemana_numero];
+	
 	
 	if($quadra_local == null) {
 				?>
@@ -26,9 +38,11 @@
                     </script>
 				<?php
 				}
+		
+
+
 			
-			$Formatdata = explode("/",$data);
-			$data = $Formatdata[2].'-'.$Formatdata[1].'-'.$Formatdata[0];
+	
 
 ?>
 
@@ -102,6 +116,7 @@
         <div class="col-md-12">
 			Data selecionada: <?php echo $data ?>
 			Quadra selecionada: <?php echo $quadra_local ?>
+			Dia da semana : <?php echo $diasemana[$diasemana_numero];?>
 		</div>
 	  </div>
 	</div>
@@ -110,7 +125,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-		  <?php echo $date ?>
+		  
 			<form action="confirma_pedido.php" method="post">
 			<?php	
 			$sql4 = "SELECT id_quadra FROM tb_quadras_locais WHERE id = '$quadra_local'";
@@ -163,6 +178,7 @@
 				<input type="hidden" name="data" value="<?php echo $data?>" placeholder="<?php echo $data?>" ></button>
 				<input type="hidden" name="quadra_local" value="<?php echo $quadra_local?>" placeholder=" <?php echo $quadra_local?>"></button>
 				<input type="hidden" name="quadra" value="<?php echo $quadra?>" placeholder=" <?php echo $quadra?>"></button>
+				<input type="hidden" name="dia" value="<?php echo $diasemana[$diasemana_numero]?> " placeholder="<?php echo $diasemana[$diasemana_numero]?>"></button>
 				
 			</form>
         </div>
